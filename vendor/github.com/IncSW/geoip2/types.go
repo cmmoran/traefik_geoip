@@ -72,8 +72,6 @@ type Traits struct {
 	AutonomousSystemOrganization string  // Enterprise
 	AutonomousSystemNumber       uint32  // Enterprise
 	IsLegitimateProxy            bool    // Enterprise
-	MobileCountryCode            string  // Enterprise
-	MobileNetworkCode            string  // Enterprise
 	IsAnonymousProxy             bool
 	IsSatelliteProvider          bool
 }
@@ -103,8 +101,6 @@ type ISP struct {
 	AutonomousSystemOrganization string
 	ISP                          string
 	Organization                 string
-	MobileCountryCode            string
-	MobileNetworkCode            string
 }
 
 type ConnectionType struct {
@@ -123,7 +119,6 @@ type AnonymousIP struct {
 type ASN struct {
 	AutonomousSystemNumber       uint32
 	AutonomousSystemOrganization string
-	Network                      string
 }
 
 type Domain struct {
