@@ -18,14 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GOLANGCI_LINT_VERSION: v1.50.0
-      YAEGI_VERSION: v0.14.3
+      YAEGI_VERSION: v0.16.1
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 10
       # - uses: wagoid/commitlint-github-action@v5
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version-file: ${{ github.workspace }}/go.mod
       # - name: golangci-lint
@@ -35,6 +35,6 @@ jobs:
       #     args: "--help"
       - name: setup yaegi
         run: curl -sfL https://raw.githubusercontent.com/traefik/yaegi/master/install.sh | bash -s -- -b /usr/local/bin ${YAEGI_VERSION}
-      - uses: extractions/setup-just@v1
+      - uses: extractions/setup-just@v2
       - name: test
         run: just test
