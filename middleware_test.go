@@ -36,7 +36,7 @@ func TestGeoIPConfig(t *testing.T) {
 
 func TestGeoIPBasic(t *testing.T) {
 	mwCfg := mw.CreateConfig()
-	mwCfg.DBPath = "./GeoLite2-City.mmdb"
+	mwCfg.DBPath = "./geolite2-city.mmdb"
 
 	called := false
 	next := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) { called = true })
@@ -72,7 +72,7 @@ func TestMissingGeoIPDB(t *testing.T) {
 
 func TestGeoIPFromRemoteAddr(t *testing.T) {
 	mwCfg := mw.CreateConfig()
-	mwCfg.DBPath = "./GeoLite2-City.mmdb"
+	mwCfg.DBPath = "./geolite2-city.mmdb"
 	mwCfg.Debug = true
 
 	next := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {})
@@ -85,20 +85,20 @@ func TestGeoIPFromRemoteAddr(t *testing.T) {
 	assertHeader(t, req, mw.CountryCodeHeader, "DE")
 	assertHeader(t, req, mw.RegionHeader, "BY")
 	assertHeader(t, req, mw.CityHeader, "Munich")
-	assertHeader(t, req, mw.LatitudeHeader, "48.1663")
-	assertHeader(t, req, mw.LongitudeHeader, "11.5683")
-	assertHeader(t, req, mw.GeohashHeader, "u284p0rv0cje")
+	assertHeader(t, req, mw.LatitudeHeader, "48.1872")
+	assertHeader(t, req, mw.LongitudeHeader, "11.4802")
+	assertHeader(t, req, mw.GeohashHeader, "u284jhpwu11s")
 
 	req = httptest.NewRequest(http.MethodGet, "http://localhost", nil)
 	req.RemoteAddr = fmt.Sprintf("%s:9999", ValidIPNoCity)
 	instance.ServeHTTP(httptest.NewRecorder(), req)
 	assertHeader(t, req, mw.CountryHeader, "United States")
 	assertHeader(t, req, mw.CountryCodeHeader, "US")
-	assertHeader(t, req, mw.RegionHeader, "")
-	assertHeader(t, req, mw.CityHeader, "")
-	assertHeader(t, req, mw.LatitudeHeader, "37.751")
-	assertHeader(t, req, mw.LongitudeHeader, "-97.822")
-	assertHeader(t, req, mw.GeohashHeader, "9ydqy025w0qn")
+	assertHeader(t, req, mw.RegionHeader, "VA")
+	assertHeader(t, req, mw.CityHeader, "Boydton")
+	assertHeader(t, req, mw.LatitudeHeader, "36.6676")
+	assertHeader(t, req, mw.LongitudeHeader, "-78.3875")
+	assertHeader(t, req, mw.GeohashHeader, "dq8285puqb59")
 
 	req = httptest.NewRequest(http.MethodGet, "http://localhost", nil)
 	req.RemoteAddr = "qwerty:9999"
@@ -114,7 +114,7 @@ func TestGeoIPFromRemoteAddr(t *testing.T) {
 
 func TestGeoIPCountryDBFromRemoteAddr(t *testing.T) {
 	mwCfg := mw.CreateConfig()
-	mwCfg.DBPath = "./GeoLite2-Country.mmdb"
+	mwCfg.DBPath = "./geolite2-country.mmdb"
 
 	next := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {})
 	instance, _ := mw.New(context.TODO(), next, mwCfg, "traefik_geoip")
@@ -134,7 +134,7 @@ func TestGeoIPCountryDBFromRemoteAddr(t *testing.T) {
 
 func TestIgnoresExcludedIPs(t *testing.T) {
 	mwCfg := mw.CreateConfig()
-	mwCfg.DBPath = "./GeoLite2-City.mmdb"
+	mwCfg.DBPath = "./geolite2-city.mmdb"
 	mwCfg.Debug = true
 	mwCfg.ExcludeIPs = []string{ValidIP}
 
@@ -155,7 +155,7 @@ func TestIgnoresExcludedIPs(t *testing.T) {
 
 func TestHandleInvalidExcludeIP(t *testing.T) {
 	mwCfg := mw.CreateConfig()
-	mwCfg.DBPath = "./GeoLite2-City.mmdb"
+	mwCfg.DBPath = "./geolite2-city.mmdb"
 	mwCfg.Debug = true
 	mwCfg.ExcludeIPs = []string{"invalid"}
 
@@ -169,14 +169,14 @@ func TestHandleInvalidExcludeIP(t *testing.T) {
 	assertHeader(t, req, mw.CountryCodeHeader, "DE")
 	assertHeader(t, req, mw.RegionHeader, "BY")
 	assertHeader(t, req, mw.CityHeader, "Munich")
-	assertHeader(t, req, mw.LatitudeHeader, "48.1663")
-	assertHeader(t, req, mw.LongitudeHeader, "11.5683")
-	assertHeader(t, req, mw.GeohashHeader, "u284p0rv0cje")
+	assertHeader(t, req, mw.LatitudeHeader, "48.1872")
+	assertHeader(t, req, mw.LongitudeHeader, "11.4802")
+	assertHeader(t, req, mw.GeohashHeader, "u284jhpwu11s")
 }
 
 func TestGeoIPFromXForwardedFor(t *testing.T) {
 	mwCfg := mw.CreateConfig()
-	mwCfg.DBPath = "./GeoLite2-City.mmdb"
+	mwCfg.DBPath = "./geolite2-city.mmdb"
 	mwCfg.Debug = true
 
 	next := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {})
@@ -189,14 +189,14 @@ func TestGeoIPFromXForwardedFor(t *testing.T) {
 	assertHeader(t, req, mw.CountryCodeHeader, "DE")
 	assertHeader(t, req, mw.RegionHeader, "BY")
 	assertHeader(t, req, mw.CityHeader, "Munich")
-	assertHeader(t, req, mw.LatitudeHeader, "48.1663")
-	assertHeader(t, req, mw.LongitudeHeader, "11.5683")
-	assertHeader(t, req, mw.GeohashHeader, "u284p0rv0cje")
+	assertHeader(t, req, mw.LatitudeHeader, "48.1872")
+	assertHeader(t, req, mw.LongitudeHeader, "11.4802")
+	assertHeader(t, req, mw.GeohashHeader, "u284jhpwu11s")
 }
 
 func assertHeader(t *testing.T, req *http.Request, key, expected string) {
 	t.Helper()
 	if req.Header.Get(key) != expected {
-		t.Fatalf("invalid value of header [%s] is '%s', not '%s'", key, expected, req.Header.Get(key))
+		t.Fatalf("invalid value of header [%s] is '%s', not '%s'", key, req.Header.Get(key), expected)
 	}
 }

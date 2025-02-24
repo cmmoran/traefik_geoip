@@ -99,14 +99,14 @@ func NewLookup(dbPath string) (LookupGeoIP, error) {
 	var lookup LookupGeoIP
 
 	switch {
-	case strings.Contains(dbPath, "City"):
+	case strings.Contains(strings.ToLower(dbPath), "city"):
 		rdr, err := geoip2.NewCityReaderFromFile(dbPath)
 		if err != nil {
 			return nil, err
 		}
 		lookup = newCityDBLookup(rdr)
 
-	case strings.Contains(dbPath, "Country"):
+	case strings.Contains(strings.ToLower(dbPath), "country"):
 		rdr, err := geoip2.NewCountryReaderFromFile(dbPath)
 		if err != nil {
 			return nil, err
