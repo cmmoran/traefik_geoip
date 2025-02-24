@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	mw "github.com/Maronato/traefik_geoip" //nolint:depguard
+	mw "github.com/cmmoran/traefik_geoip" //nolint:depguard
 )
 
 const (
