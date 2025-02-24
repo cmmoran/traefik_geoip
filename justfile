@@ -17,7 +17,7 @@ test-yaegi: && _clean-yaegi
   #!/usr/bin/env bash
 
   TMP=$(mktemp -d yaegi.XXXXXX -p /tmp)
-  WRK="${TMP}/go/src/github.com/Maronato"
+  WRK="${TMP}/go/src/github.com/cmmoran"
   mkdir -p ${WRK}
   ln -s `pwd` "${WRK}"
   cd "${WRK}/$(basename `pwd`)"

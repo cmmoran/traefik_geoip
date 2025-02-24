@@ -7,7 +7,7 @@ type: middleware
 import: github.com/cmmoran/traefik_geoip
 
 testData:
-  dbPath: 'GeoLite2-Country.mmdb'
+  dbPath: 'geoLite2-country.mmdb'
   debug: false
   excludeIPs:
     - "192.168.0.0/16"

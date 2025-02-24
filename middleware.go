@@ -12,7 +12,7 @@ import (
 
 const (
 	// DefaultDBPath default GeoIP2 database path.
-	DefaultDBPath = "GeoLite2-Country.mmdb"
+	DefaultDBPath = "geoLite2-country.mmdb"
 	// defaultDebug default debug.
 	defaultDebug = false
 	// defaultSetRealIP default set real IP.
@@ -101,8 +101,8 @@ func New(_ context.Context, next http.Handler, cfg *Config, name string) (http.H
 
 // isExcluded checks if the IP is in the exclude list.
 func (mw *TraefikGeoIP) isExcluded(ip net.IP) bool {
-	for _, net := range mw.excludeIPs {
-		if net.Contains(ip) {
+	for _, exnet := range mw.excludeIPs {
+		if exnet.Contains(ip) {
 			return true
 		}
 	}
